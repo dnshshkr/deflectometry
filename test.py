@@ -5,18 +5,13 @@ from pygame.locals import *
 import cv2
  
 # constants 
-h = 1600
-w = 900 
+w = 1920
+h = 1080 
     
-# initialise pygame display to screen size
-def setupScreen():
-    pygame.init()
-    size=(w,h)
-    return pygame.display.set_mode(size,pygame.RESIZABLE)
-
 # place fringes on the screen
-def fringeGen(screen, desired_period, calib = True, vert=True, phase=0):
+def fringeGen(width, height, desired_period = 1, pixel_size = 440, calib = False, vert=True, phase=0):
 
+    size = (width,height)
     rgb_img = np.zeros((w,h,3))
 
     # if we want a calibration screen
@@ -25,8 +20,8 @@ def fringeGen(screen, desired_period, calib = True, vert=True, phase=0):
 
     else:
     
-        pixel_size = 440./h # pixel size in mm, calculated by width of screen (~440mm)
-
+        pixel_size = pixel_size/h # pixel size in mm, calculated by width of screen (~440mm)
+        print(pixel_size)
         p = desired_period / pixel_size
         
         if vert:
@@ -62,19 +57,14 @@ def fringeGen(screen, desired_period, calib = True, vert=True, phase=0):
     rgb_img[...,1] = img
     rgb_img[...,2] = img
 
-    I=pygame.surfarray.make_surface(rgb_img)
+    cv2.imshow("Image", rgb_img)
 
-    screen.blit(I,(0,0))
-    pygame.display.update() # update the display
-    #cv2.imshow("Image", I)
-    
-s = setupScreen()
-fringeGen(s , 50)
-print('hey')
 while True:
-    pygame.display.update()
 
-    if cv2.waitKey(0)==ord('q'):
+    fringeGen(w,h);
+    
+    print('hey')
+    if cv2.waitKey(1)==ord('q'):
         break
 
 cv2.destroyAllWindows()
