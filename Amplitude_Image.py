@@ -140,6 +140,7 @@ def main():
 
     plt.show()
     cv2.destroyAllWindows()
+    plt.imsave('imgXY.png',img_correspondence,cmap='gray')
     # cap.release()
 
 if __name__=="__main__":
