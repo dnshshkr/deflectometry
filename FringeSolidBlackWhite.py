@@ -17,12 +17,14 @@ cv2.createTrackbar('Orientation','Trackbars',0,1,nothing)
 
 while True:
 
-    wave=cv2.getTrackbarPos('Period','Trackbars')
+    wave=cv2.getTrackbarPos('Period','Trackbars',)
     sizeXmax=cv2.getTrackbarPos('X axis max','Trackbars')
     sizeXmin=cv2.getTrackbarPos('X axis min','Trackbars')
     orientation=cv2.getTrackbarPos('Orientation','Trackbars')
-
-    x = np.arange(sizeXmin, sizeXmax, 1)
+    if sizeXmax<=52:
+        sizeXmax=52
+    #x = np.arange(sizeXmin, sizeXmax, 1)
+    x = np.arange(-250, 500, 1)
     X, Y = np.meshgrid(x, x)
     wavelength = wave
     
@@ -39,7 +41,7 @@ while True:
     cv2.imshow("Fringe", grating2)
    
 
-    if cv2.waitKey(1)==ord('q'):
+    if cv2.waitKey(1)==27:
         break
 
 cv2.destroyAllWindows()

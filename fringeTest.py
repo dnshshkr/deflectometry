@@ -51,7 +51,7 @@ while True:
     else:
         time1 = time.time()
 
-    if cv2.waitKey(1)==ord('q'):
+    if cv2.waitKey(1)==27:
         break
 
 cv2.destroyAllWindows()
